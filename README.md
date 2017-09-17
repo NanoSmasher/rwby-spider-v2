@@ -26,7 +26,7 @@ pip install imgurpython
  - [Imgur Client](https://api.imgur.com/oauth2/addclient). Record the Client ID and secret.
    \*NOTE: You can read more about the [Imgurpython](https://apidocs.imgur.com/) commands if you wish.
 
-3. Create a file named "creds.key" with the following four lines:  
+3. Create a file named "clients.key" with the following four lines:  
  - Reddit Client ID
  - Reddit Client Secret  
  - Imgur Client ID
