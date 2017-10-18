@@ -4,6 +4,7 @@ import requests
 import json
 import urllib
 import urllib.request
+import re
 
 import pathlib
 pathlib.Path('RWBY').mkdir(parents=True, exist_ok=True)
@@ -61,7 +62,7 @@ results = reddit.subreddit('rwby').search('flair:art site:imgur.com', **params)
 
 for result in results:
     r = result.url
-    d = datetime.utcfromtimestamp(result.created)
+    d = datetime.utcfromtimestamp(result.created_utc)
     if is_album(r):
         url = "https://api.imgur.com/3/album/"+parse_token(r)+"/images"
         response = requests.request("GET", url, headers=headers)
@@ -81,9 +82,12 @@ for result in results:
 
 results = reddit.redditor('velvetbot').comments.new()
 for result in results:
-    r = re.search('\[Imgur( Album)?\]\((.*?)\)',result.body).group(2)
+    r = re.search('\[Imgur( Album)?\]\((.*?)\)',result.body)
+    if r is None:
+        continue
+    r = r.group(2)
     # group 0 is the entire thing, group 1 is the album match and group 2 is the link
-    d = datetime.utcfromtimestamp(result.created)
+    d = datetime.utcfromtimestamp(result.created_utc)
     if is_album(r):
         url = "https://api.imgur.com/3/album/"+parse_token(r)+"/images"
         response = requests.request("GET", url, headers=headers)
@@ -105,5 +109,5 @@ params = {'sort':'new', 'time_filter':'year'}
 results = reddit.subreddit('rwby').search('flair:art site:i.redd.it', **params)
 for result in results:
     r = result.url
-    d = datetime.utcfromtimestamp(result.created)
+    d = datetime.utcfromtimestamp(result.created_utc)
     download(d,r,r[18:])
