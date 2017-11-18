@@ -2,7 +2,7 @@
 Updated spider to download all images from the r/RWBY subreddit flaired as art
 
 # Details  
-To complicate every this spider goes through the r/RWBY subreddit in 3 phases
+This spider goes through the r/RWBY subreddit in 3 phases
 
 1. Piggybacks on u/velvetbot's hard work for non-imgur submissions. Seems like this faunus likes to do all my dirty work :3
 
@@ -37,3 +37,5 @@ pip install imgurpython
 # Todo
 
 [ ] Create UI
+[ ] Grab images that Velvetbot doesn't catch?
+[ ] Improved debugging
