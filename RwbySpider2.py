@@ -22,8 +22,8 @@ reddit = praw.Reddit(client_id=creds[0],client_secret=creds[1],user_agent='Pytho
 def parse_token(token):
     """ Takes in either a URL and returns the string token.
     """
-    domain_pattern = r"(https:/|http:/)?(/i\.)?(/m\.)?(/imgur.com/)?(a/)?(gallery/)?(\.jpg.*|\.jpeg.*|\.png.*|\.gif.*)?"
-    token_pattern = r"([a-zA-Z0-9]{1,})(/)?$"
+    domain_pattern = r"(https:/|http:/)?(/i\.)?(/m\.)?(/)?(imgur.com/)?(a/)?(gallery/)?(\.jpg.*|\.jpeg.*|\.png.*|\.gif.*)?(\?.*)?"
+    token_pattern = r"([a-zA-Z0-9]+)"
 
     stripped_id = re.sub(domain_pattern, '', token, flags = re.IGNORECASE) # Drop the domain and extension.
     token = re.search(token_pattern, stripped_id).groups()[0] # Drop the album/gallery note.
@@ -73,6 +73,7 @@ for result in results:
         url = "https://api.imgur.com/3/image/" + parse_token(r)
         response = requests.request("GET", url, headers=headers)
         j = json.loads(response.text)["data"]
+        print(r)
         download(d,j["link"],j["link"][20:])
 
 ##################################################
