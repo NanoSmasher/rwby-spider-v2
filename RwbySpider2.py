@@ -56,6 +56,7 @@ headers = {'authorization': 'Client-ID '+creds[2]} # For Imgur authorization
 ##############################
 # Part 1: Direct Imgur links #
 ##############################
+print("Direct Imgur Links")
 
 params = {'sort':'new', 'time_filter':'year'}
 results = reddit.subreddit('rwby').search('flair:art site:imgur.com', **params)
@@ -66,20 +67,20 @@ for result in results:
     if is_album(r):
         url = "https://api.imgur.com/3/album/"+parse_token(r)+"/images"
         response = requests.request("GET", url, headers=headers)
-        j = json.loads(response.text)["data"]
-        for item in j:
-            download(d,item["link"],item["link"][20:])
+        if json.loads(response.text)["success"]:
+            for item in json.loads(response.text)["data"]:
+                download(d,item["link"],item["link"][20:])
     else: # it's an image
         url = "https://api.imgur.com/3/image/" + parse_token(r)
         response = requests.request("GET", url, headers=headers)
-        j = json.loads(response.text)["data"]
-        print(r)
-        download(d,j["link"],j["link"][20:])
+        if json.loads(response.text)["success"]:
+            j = json.loads(response.text)["data"]
+            download(d,j["link"],j["link"][20:])
 
 ##################################################
 # Part 2: Indirect Imgur links through velvetbot #
 ##################################################
-
+print("Velvetbot links")
 results = reddit.redditor('velvetbot').comments.new()
 for result in results:
     r = re.search('\[Imgur( Album)?\]\((.*?)\)',result.body)
@@ -104,7 +105,7 @@ for result in results:
 ##################################
 # Part 3: Direct i.redd.it links #
 ##################################
-
+print("Reddit Links")
 params = {'sort':'new', 'time_filter':'year'}
 results = reddit.subreddit('rwby').search('flair:art site:i.redd.it', **params)
 for result in results:

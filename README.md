@@ -26,16 +26,17 @@ pip install imgurpython
  - [Imgur Client](https://api.imgur.com/oauth2/addclient). Record the Client ID and secret.
    \*NOTE: You can read more about the [Imgurpython](https://apidocs.imgur.com/) commands if you wish.
 
-3. Create a file named "clients.key" with the following four lines:  
+3. Create a file named "clients.key" with the following three lines:  
  - Reddit Client ID
  - Reddit Client Secret  
  - Imgur Client ID
- - Imgur Client Secret
+
+The Imgur Client Secret is not necessary, but you should know it anyways
 
 4. Run **RwbySpider.py**. Random debug stuff will spew out but everything should be downloaded to /RWBY/ ordered by year-month.
 
 # Todo
 
-[ ] Create UI
-[ ] Grab images that Velvetbot doesn't catch?
-[ ] Improved debugging
+[ ] Create UI   
+[X] Grab images that Velvetbot doesn't catch?   
+[ ] Improved debugging   
