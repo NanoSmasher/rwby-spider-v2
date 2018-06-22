@@ -103,5 +103,8 @@ ENV/
 # Client ID's and Secret
 clients.key
 
+# Settings File
+settings.ini
+
 # Image folder
 /RWBY
