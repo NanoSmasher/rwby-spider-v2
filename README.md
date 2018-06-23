@@ -12,11 +12,10 @@ This spider goes through the r/RWBY subreddit in 3 phases:
 
 # Usage
 
-1. Have praw and imgurpython installed in your python 3.2+ environment.
+1. Have praw (version 4 or higher) installed in your python 3.2+ environment.
 
 ```
 pip install praw
-pip install imgurpython
 ```
 
 2. Apply for the reddit and imgur clients.
@@ -26,7 +25,7 @@ pip install imgurpython
  - [Imgur Client](https://api.imgur.com/oauth2/addclient). Record the Client ID and secret.
    \*NOTE: You can read more about the [Imgurpython](https://apidocs.imgur.com/) commands if you wish.
 
-3. Run **RwbySpider.py**. On the first run it will ask for your Reddit application ID, Reddit Application secret, and Imgue Client ID (not the secret). After that it should automatically  downloaded everything to /RWBY/ ordered by year-month.
+3. Run **RwbySpider.py**. On the first run it will ask for your Reddit application ID, Reddit Application secret, and Imgur Client ID (not the secret), along with an optional password. After that it should automatically downloaded everything to /RWBY/ ordered by year-month.
 
 # Todo
 

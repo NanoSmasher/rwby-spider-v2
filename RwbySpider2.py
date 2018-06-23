@@ -28,7 +28,7 @@ def main():
     # optional decryption
     p = ""
     if config['DEFAULT'].getboolean('encrypt',False):
-        p = getpass.getpass("Client information is encrpyted. Please enter key: ")
+        p = getpass.getpass("Client information is encrpyted. Please enter password: ")
     
     # test to see if reddit credentials are correct
     reddit = praw.Reddit(client_id=decode(p,config['DEFAULT'].get('Reddit Client ID')),
@@ -204,7 +204,7 @@ def new_settings():
         if a in ['Y','y','N','n','']: break
         print("invalid response")
     if a in ['Y','y','']:
-        
+        p = getpass.getpass("Enter password to use: ")
         config['DEFAULT']['Reddit Client ID'] = encode(p,config['DEFAULT']['Reddit Client ID'])
         config['DEFAULT']['Reddit Client Secret'] = encode(p,config['DEFAULT']['Reddit Client Secret'])
         config['DEFAULT']['Imgur Client ID'] = encode(p,config['DEFAULT']['Imgur Client ID'])
