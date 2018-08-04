@@ -34,18 +34,19 @@ def main():
     reddit = praw.Reddit(client_id=decode(p,config['DEFAULT'].get('Reddit Client ID')),
                          client_secret=decode(p,config['DEFAULT'].get('Reddit Client Secret')),
                          user_agent='Python:r/RWBY Spider')
+    
     try:
-        reddit.user.me()
-    except prawcore.exceptions.ResponseException as E:
+        reddit.user.preferences()
+    except prawcore.exceptions.Forbidden as E:
         error = E.args[0]
         if '403' in error:
             print("Reddit Application accepted")
-        else:
-            print("Reddit Application Error. Either the key is incorrect, or your client credentials are wrong.")
-            print("(If you continue to have problems, you can reset your settings by deleting the settings.ini file)")
-            input("Press Enter to continue...")
-            exit()
-
+    except prawcore.exceptions.ResponseException:
+        print("Reddit Application Error. Either the key is incorrect, or your client credentials are wrong.")
+        print("(If you continue to have problems, you can reset your settings by deleting the settings.ini file)")
+        input("Press Enter to continue...")
+        exit()
+   
     # test to see if Imgur credentials are correct
     headers = {'authorization': 'Client-ID '+decode(p,config['DEFAULT'].get('Imgur Client ID'))} # For Imgur authorization
     url = "https://api.imgur.com/3/credits"
@@ -75,6 +76,9 @@ def main():
                 for item in json.loads(response.text)["data"]:
                     c[0] += 1
                     c[1] += download(d,item["link"],item["link"][20:],DEBUG)
+            else:
+                if DEBUG: print("Unable to retrieve album " + parse_token(r))
+                continue
         else: # it's an image
             url = "https://api.imgur.com/3/image/" + parse_token(r)
             response = requests.request("GET", url, headers=headers)
@@ -101,6 +105,9 @@ def main():
                 for item in json.loads(response.text)["data"]:
                     c[2] += 1
                     c[3] += download(d,item["link"],item["link"][20:],DEBUG)
+            else:
+                if DEBUG: print("Unable to retrieve album " + parse_token(r))
+                continue
         else: # it's an image
             url = "https://api.imgur.com/3/image/" + parse_token(r)
             response = requests.request("GET", url, headers=headers)
